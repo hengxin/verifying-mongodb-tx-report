@@ -1,0 +1,281 @@
+% intro.tex
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{What is \unistore?}
+  \begin{center}
+    \unistore{} is a \red{fast}, \red{scalable}, and \red{fault-tolerant} \\[8pt]
+    \blue{transactional} distributed key-value store \\[8pt]
+    that supports a \red{combination of weak and strong consistency}.
+
+    \pause
+    \vspace{0.80cm}
+    Weak consistency: \cc \\[6pt]
+    Strong consistency: \sr
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Why \textsc{Uni-}?}
+  \begin{center}
+    Weak consistency: low latency, high availability
+
+    \fig{width = 0.40\textwidth}{figs/best-of-both-worlds}
+
+    Strong consistency: easy to preserve critical application invariants
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Why \textsc{Uni-}?}
+  \begin{center}
+    \textsc{deposit \quad \red{withdraw} \quad query \quad interest}
+    \fig{width = 0.50\textwidth}{figs/banking}
+    \red{Invariant: $\textsf{balance} \ge 0$}
+
+    \pause
+    \vspace{0.30cm}
+    Causal consistency allows two concurrent \textsc{withdraw} \\
+    to execute without knowing each other.
+
+    \pause
+    \vspace{0.30cm}
+    Only \textsc{withdraw} needs to use strong consistency.
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Consistency Model of \unistore}
+  \begin{center}
+    \unistore{} implements a transactional variant of \\
+    \red{Partial Order-Restrictions} (\por) consistency~\purple{
+      \footnotesize [Li@ACT'2018]}
+
+    \vspace{0.60cm}
+    \begin{enumerate}[(I)]
+      \centering
+      \item transactional causal consistency by default
+      \item to specify conflicting transactions under strong consistency
+    \end{enumerate}
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Consistency Model of \unistore}
+  \begin{definition}[Session Order]
+    A transaction $t_{1}$ precedes a transaction $t_{2}$
+    in the \red{session order}, denoted \red{$t_{1} \rel{\so} t_{2}$},
+    if they are executed by the same client and $t_{1}$ is executed before $t_{2}$.
+  \end{definition}
+
+  \vspace{0.60cm}
+  \begin{definition}[Conflict Relation]
+    The \red{conflict relation}, denoted \red{$\conflict$},
+    between transactions is a symmetric relation.
+    \[
+      t_{1} \conflict t_{2} \iff t_{2} \conflict t_{1}.
+    \]
+  \end{definition}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Consistency Model of \unistore}
+  \begin{definition}[\por]
+    A set of transactions $\txs \triangleq \causaltxs \uplus \strongtxs$
+    committed by \unistore{} satisfies \blue{\por{}}
+    if there exists a \red{causal order $\prec$} on $T$ such that
+
+    \vspace{0.30cm}
+    \begin{description}[\ev:]
+      \setlength{\itemsep}{8pt}
+      \item[\causalityaxiom:]
+        \uncover<2->{
+          `$\prec$' is a partial order and $\so \subseteq\; \prec$.
+        }
+      \item[\conflictaxiom:]
+        \uncover<3->{$\forall t_{1}, t_{2} \in \strongtxs.\;
+          t_{1} \conflict t_{2} \implies t_{1} \prec t_{2} \lor t_{2} \prec t_{1}.$
+        }
+      \item[\ev:]
+        \uncover<4->{
+          A transaction $t \in T$ that is either \purple{strong}
+          or \teal{originates at a correct data center}
+          eventually become \red{visible} at all \violet{correct} data centers:
+          from some point on, $t$ precedes \red{in $\prec$} all transactions issued
+          at correct data centers.
+        }
+      \item[\retval:]
+        \uncover<5->{
+          $\intretval \land \extretval$
+        }
+    \end{description}
+  \end{definition}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Consistency Model of \unistore}
+  \begin{center}
+    Consider a read $r$ from key $k$ in a transaction $t$.
+
+    \vspace{0.80cm}
+    \blue{$\intretval:$} read from the latest update on $k$ preceding $r$ in $t$
+
+    \[
+      \retval = \blue{\intretval} \land \red{\extretval}
+    \]
+
+    \vspace{0.50cm}
+    \red{$\extretval:$} read from the last update on $k$ \\[3pt]
+    of the latest transaction (in an order consistent with $\prec$) preceding $t$
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Consistency Model of \unistore}
+  \begin{center}
+    \textsc{deposit \quad \red{withdraw} \quad query \quad interest}
+    \fig{width = 0.50\textwidth}{figs/banking}
+    \red{Invariant: $\textsf{balance} \ge 0$}
+
+    \vspace{0.50cm}
+    Declaring that strong transactions \\[3pt]
+    including \textsc{withdraw} on the same account conflict.
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Design Challenge of \unistore}
+  \begin{center}
+    {To satisfy \red{liveness (\ev)} despite failures}
+    \fig{width = 0.50\textwidth}{figs/design-challenges}
+
+    \vspace{0.50cm}
+    A transaction $t \in T$ that is either \purple{strong}
+    or \teal{originates at a correct data center}
+    eventually become \red{visible} at all \violet{correct} data centers.
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Design Challenge of \unistore{} (I)}
+  \begin{center}
+    {Data center $d_{1}$ crashes \\[3pt]
+    before $\causalcolor{t_{1}}$ is replicated to correct data center $d_{3}$.}
+
+    \vspace{0.20cm}
+    \fig{width = 0.70\textwidth}{figs/liveness-causal}
+
+    \pause
+    Transaction $t_{2}$ (at correct data center $d_{2}$) \\[3pt]
+    may never become visible at correct data center $d_{3}$.
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Fault-tolerance of \unistore{} (I)}
+  \begin{center}
+    Data center $d_{1}$ crashes \\[3pt]
+    before $\causalcolor{t_{1}}$ is replicated to correct data center $d_{3}$.
+
+    \vspace{0.20cm}
+    \fig{width = 0.70\textwidth}{figs/liveness-causal}
+
+    \pause
+    Data center $d_{2}$ need to \red{forward} causal transactions \\[3pt]
+    to other data centers.
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Design Challenge of \unistore{} (II)}
+  \begin{center}
+    Data center $d_{1}$ crashes \\[3pt]
+    before $\causalcolor{t_{1}}$ is replicated to correct data center $d_{3}$.
+
+    \vspace{0.50cm}
+    \fig{width = 1.00\textwidth}{figs/liveness-strong}
+
+    \pause
+    \vspace{0.30cm}
+    Transaction $\strongcolor{t_{2}}$ will never be visible at $d_{3}$. \\[3pt]
+    No transaction $\strongcolor{t_{3}}$ conflicting with $\strongcolor{t_{2}}$ can commit \\
+    (by $\conflictaxiom$).
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Fault-tolerance of \unistore{} (II)}
+  \begin{center}
+    \unistore{} ensures that before a strong transaction commits, \\[3pt]
+    all its causal dependencies are \red{uniform}, \\[3pt]
+    i.e., will eventually become visible at all correct data centers.
+
+    \vspace{0.30cm}
+    \fig{width = 1.00\textwidth}{figs/liveness-strong}
+
+    \pause
+    Transaction $\causalcolor{t_{1}}$ will eventually be visible at $d_{3}$. \\[3pt]
+    Transaction $\strongcolor{t_{2}}$ will eventually be visible at $d_{3}$. \\[3pt]
+    Transaction $\strongcolor{t_{3}}$ may be committed at $d_{3}$. \\[3pt]
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Performance of \unistore}
+  \begin{center}
+    Causal transactions remain highly-available, i.e., committed locally. \\[6pt]
+
+    \vspace{0.30cm}
+    \fig{width = 1.00\textwidth}{figs/liveness-strong}
+
+    \vspace{0.20cm}
+    A strong transaction may have to \red{wait} for some of its dependencies
+    to become uniform before committing.
+
+    \pause
+    \vspace{0.50cm}
+    \red{However, this may cost too much.}
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Performance of \unistore{}}
+  \begin{center}
+    \unistore{} makes a remote causal transaction visible to clients \\[3pt]
+    only \red{after it is uniform}.
+
+    \vspace{0.30cm}
+    Causal transactions are executed on an (almost) \\[3pt]
+    \red{uniform snapshot} that may be slightly in the past.
+
+    \vspace{0.50cm}
+    \fig{width = 1.00\textwidth}{figs/liveness-strong}
+
+    \pause
+    A strong transaction only needs to wait for causal transactions \\[3pt]
+    originating at the \red{local} data center to become uniform.
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Scalability of \unistore}
+  \begin{center}
+    \unistore{} scales horizontally, \\[3pt]
+    i.e., with the number of machines ({partitions}) in each data center.
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%

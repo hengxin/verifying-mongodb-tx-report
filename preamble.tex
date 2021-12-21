@@ -1,0 +1,99 @@
+% preamble.tex
+
+% \usepackage{xeCJK}
+% \usepackage{fontspec}
+
+\usetheme{CambridgeUS} % try Madrid
+\usecolortheme{beaver} % try beaver, dolphin, seahorse
+% \usefonttheme[onlymath]{serif} % try "professionalfonts"
+\usefonttheme{serif}  % standard font (same with that in ``standalone'')
+% \setCJKmainfont{Microsoft YaHei} % try SimSun
+% \setmainfont{Gill Sans}
+% \setsansfont{Gill Sans}
+
+\usepackage[export]{adjustbox}
+
+\setbeamersize{text margin left = 2em, text margin right = 1em}
+\setbeamercolor{footnote mark}{fg = teal}
+\setbeamertemplate{itemize items}[default]
+\setbeamertemplate{enumerate items}[default]
+
+\renewcommand*{\thefootnote}{\alph{footnote}}
+
+\usepackage{graphicx, subcaption}
+
+\usepackage{amssymb, pifont}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+\usepackage{xcolor}
+
+% theorems (global numbering)
+\theoremstyle{definition}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{assumption}{\textsc{Assumption}}
+
+\usepackage{caption}
+\DeclareCaptionLabelSeparator{none}{}
+\captionsetup{labelsep = none}
+
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+
+\newcommand{\incell}[2]{\begin{tabular}[c]{@{}c@{}}#1\\[3pt] #2\end{tabular}}
+
+% \renewcommand\figurename{图:\;}
+% \renewcommand\tablename{表:\;}
+
+% for fig without caption: #1: width/size; #2: fig file
+\newcommand{\fig}[2]{
+  \begin{figure}[htp]
+    \centering
+    \includegraphics[#1]{#2}
+  \end{figure}
+}
+
+% for fig with caption: #1: width/size; #2: fig file; #3: fig caption
+\newcommand{\figcap}[3]{
+  \begin{figure}[htp]
+    \centering
+    \includegraphics[#1]{#2}
+    \caption{#3}
+  \end{figure}
+}
+
+\usepackage[linewidth = 1pt, framemethod = TikZ]{mdframed}
+\mdfsetup{frametitlealignment=\center}
+
+% for citation
+% try "backend = bibtex", "backend = biber"
+\usepackage[natbib = true, backend = biber, style = authoryear, maxbibnames = 99]{biblatex}
+\setbeamertemplate{bibliography item}[article]
+\renewcommand*{\bibfont}{\footnotesize}
+\addbibresource{20200930-clientcentric-podc2017.bib}
+
+\newcommand{\ncite}[1]{\violet{\footnotesize [\cite{#1}]}}
+
+% colors
+\definecolor{DarkRed}{rgb}{0.55, 0.0, 0.0}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\purple}[1]{\textcolor{purple}{#1}}
+\newcommand{\cyan}[1]{\textcolor{cyan}{#1}}
+\newcommand{\violet}[1]{\textcolor{violet}{#1}}
+\newcommand{\lgray}[1]{\textcolor{lightgray}{#1}}
+\newcommand{\teal}[1]{\textcolor{teal}{#1}}
+\newcommand{\brown}[1]{\textcolor{brown}{#1}}
+\newcommand{\orange}[1]{\textcolor{orange}{#1}}
+
+\newcommand{\hl}[2]{\fcolorbox{#1}{#1!60}{#2}}
+
+\newcommand{\thankyou}{
+  \begin{frame}[noframenumbering]
+    \begin{center}
+      \fig{width = 0.618\textwidth}{figs/thankyou}
+      Hengfeng Wei (hfwei@nju.edu.cn)
+    \end{center}
+  \end{frame}
+}
