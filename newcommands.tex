@@ -7,291 +7,82 @@
 \newcommand{\dom}{\ensuremath{\mathsf{dom}}}
 \newcommand{\range}{\ensuremath{\mathsf{range}}}
 
-\newcommand{\file}[1]{\textsl{file: #1}}
+\newcommand{\wtalg}{\textsc{WiredTiger}}
+\newcommand{\rsalg}{\textsc{ReplicaSet}}
+\newcommand{\scalg}{\textsc{ShardedCluster}}
 
-% color
-\newcommand{\causalentry}{\textsl{causal}}
-\newcommand{\strongentry}{\textsl{strong}}
+\newcommand{\si}{\textsc{SI}}
+\newcommand{\ansisi}{\textsc{ANSI-SI}}
+\newcommand{\rtsi}{\textsc{RealtimeSI}}
+\newcommand{\gsi}{\textsc{GSI}}
+\newcommand{\parallelsi}{\textsc{PSI}}
+\newcommand{\pcsi}{\textsc{PCSI}}
+\newcommand{\strongsi}{\textsc{StrongSI}}
+\newcommand{\strongsessionsi}{\textsc{StrongSessionSI}}
+\newcommand{\sessionsi}{\textsc{SessionSI}}
 
-% color for topics
-\newcommand{\lccolor}[1]{\blue{#1}}
-\newcommand{\tscolor}[1]{\purple{#1}}
-\newcommand{\pastvccolor}[1]{\black{#1}}
-\newcommand{\causalcolor}[1]{\teal{#1}}
-\newcommand{\strongcolor}[1]{\red{#1}}
-\newcommand{\fencecolor}[1]{#1} % teal
-\newcommand{\migratecolor}[1]{#1} % brown
+%%%%%%%%%%%%%%% system models %%%%%%%%%%%%%%%
+\newcommand{\E}{E}
+\newcommand{\evar}{\mathit{e}}
+\newcommand{\fvar}{\mathit{f}}
+\newcommand{\Event}{{\sf Event}}
+\newcommand{\REvent}{{\sf REvent}}
+\newcommand{\WEvent}{{\sf WEvent}}
+\newcommand{\HEvent}{{\sf HEvent}}
+\newcommand{\op}{{\sf op}}
+\newcommand{\Op}{{\sf Op}}
+\newcommand{\readevent}{{\sf read}}
+\newcommand{\Read}{{\sf Read}\;}
+\newcommand{\writeevent}{{\sf write}}
+\newcommand{\Write}{{\sf Write}\;}
+\newcommand{\WriteTx}{{\sf WriteTx}}
+\newcommand{\starttime}{\textsl{start}}
+\newcommand{\starttimewt}{\textsl{start}_\textsl{wt}}
+\newcommand{\starttimers}{\textsl{start}_\textsl{rs}}
+\newcommand{\starttimesc}{\textsl{start}_\textsl{sc}}
+\newcommand{\committime}{\textsl{commit}}
+\newcommand{\committimewt}{\textsl{commit}_\textsl{wt}}
+\newcommand{\committimers}{\textsl{commit}_\textsl{rs}}
+\newcommand{\committimesc}{\textsl{commit}_\textsl{sc}}
+\newcommand{\committsfunc}{\textsl{commit\_ts}}
+\newcommand{\readtsfunc}{\textsl{read\_ts}}
+%%%%%%%%%%%%%%% system models %%%%%%%%%%%%%%%
 
-\newcommand{\cm}{\mathbb{C}}
-\newcommand{\system}{\mathbb{S}}
-
-% protocol names
-\newcommand{\cure}{\textsc{Cure}}
-\newcommand{\ucc}{\textsc{UCC}}
-\newcommand{\txcure}{\textsc{TxCure}}
-\newcommand{\rbcure}{\textsc{RedBlue-Cure}}
-\newcommand{\atc}{\textsl{atc2021}}
-\newcommand{\unistore}{\textsc{UniStore}}
-
-\newcommand{\pastVC}{{\sf pastVec}}
-\newcommand{\css}{\texttt{css}}
-\newcommand{\ok}{\mathsf{ok}}
-
-\newcommand{\heartbeat}{\textsc{heartbeat}}
-\newcommand{\replicate}{\textsc{replicate}}
-
-% bold fonts for keywords
-\newcommand{\var}{{\bf var}\;}
-\newcommand{\send}{{\bf send}\;}
-\newcommand{\sendto}{{\bf to}\;}
-\newcommand{\from}{{\bf from}\;}
-\newcommand{\wait}{{\bf wait}\;}
-\newcommand{\until}{{\bf until}\;}
-\newcommand{\receive}{{\bf receive}\;}
-\newcommand{\received}{{\bf received}\;}
-\newcommand{\upon}{{\bf upon}\;}
-\newcommand{\upcall}{{\bf upcall}\;}
-
-% ucc
-\newcommand{\uss}{\texttt{uss}}
-\newcommand{\bcastpvcremote}{\textsc{bcast-pvc-remote}}
-\newcommand{\updatervc}{\textsc{update-rvc}}
-\newcommand{\bcastpvclocal}{\textsc{bcast-pvc-local}}
-\newcommand{\bcastcss}{\textsc{bcast-css}}
-\newcommand{\updateuss}{\textsc{update-uss}}
-\newcommand{\clean}{\textsc{clean-updates}}
-\newcommand{\pre}{{\bf pre:}\;}
-
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\D}{\mathcal{D}}
-\renewcommand{\P}{\mathcal{P}}
-\newcommand{\VC}{\mathcal{VC}}
-
-%% client
-\newcommand{\clientcoord}{{\sf p}}
-\newcommand{\starttx}{\textsc{start\_tx}}
-\newcommand{\start}{\textsc{start}}
-\renewcommand{\read}{\textsc{read}}
-\newcommand{\update}{\textsc{update}}
-\newcommand{\commit}{\textsc{commit}}
-\newcommand{\commitcausaltx}{\textsc{commit\_causal\_tx}}
-\newcommand{\commitstrongtx}{\textsc{commit\_strong\_tx}}
-\newcommand{\abort}{\textsc{abort}}
-\newcommand{\commitcausal}{\textsc{commit\_causal}}
-\newcommand{\commitstrong}{\textsc{commit\_strong}}
-
-%% coord
-\newcommand{\vc}{V}
-\newcommand{\generatetid}{\textsf{generate\_tid}}
-\newcommand{\partitionof}{\textsf{partition}}
-\newcommand{\doop}{\textsc{do\_op}}
-\newcommand{\doread}{\textsc{do\_read}}
-\newcommand{\doupdate}{\textsc{do\_update}}
-
-%% replica
-\newcommand{\find}{\textsf{find}}
-\newcommand{\readkey}{\textsc{read\_key}}
-\newcommand{\getversion}{\textsc{get\_version}}
-\newcommand{\prepare}{\textsc{prepare}}
-\newcommand{\prepareack}{\textsc{prepare\_ack}}
-\newcommand{\preparecausal}{\textsc{prepare\_causal}}
-\newcommand{\preparecausalack}{\textsc{prepare\_causal\_ack}}
-
-%% replication
-\newcommand{\propagate}{\textsc{propagate\_local\_txs}}
-\newcommand{\forward}{\textsc{forward\_remote\_txs}}
-
-%% clock
-\newcommand{\bcast}{\textsc{broadcast\_vecs}}
-\newcommand{\knownvclocal}{\textsc{knownvec\_local}}
-\newcommand{\stablevcproc}{\textsc{stablevec}}
-\newcommand{\knownvcglobal}{\textsc{knownvec\_global}}
-
-\newcommand{\oplog}{{\sf opLog}}
-\newcommand{\txlog}{{\sf txLog}}
-\newcommand{\ep}{{\sf ep}}
-\newcommand{\shards}{{\sf shards}}
-
-% accessor functions
-\newcommand{\ops}{\textsl{ops}}
-\newcommand{\ws}{\textsl{ws}}
-\newcommand{\rs}{\textsl{rs}}
-\newcommand{\key}{\textsl{key}}
-\newcommand{\keys}{\textsl{keys}}
-\newcommand{\client}{\textsl{client}}
-\newcommand{\dc}{\textsl{dc}}
-\newcommand{\coord}{\textsl{coord}}
-\newcommand{\startoftx}{\textsl{st}}
-\newcommand{\commitoftx}{\textsl{ct}}
-\newcommand{\partitions}{\textsl{partitions}}
-\newcommand{\snapshotVC}{\textsl{snapshotVec}}
-\newcommand{\snapshot}{\textsf{snapshot}}
-\newcommand{\commitVC}{\textsl{commitVec}}
-\newcommand{\prepareVC}{\textsl{prepareVec}}
-
-\newcommand{\timestamp}{\textsf{ts}}
-\newcommand{\ud}{\textsl{ud}} % last update
-\newcommand{\R}{R}
-\newcommand{\W}{W}
-\newcommand{\act}{{\sf act}}
-
-\newcommand{\txs}{T}
-\newcommand{\rotxs}{T_{\textsc{ro}}}
-\newcommand{\rwtxs}{T_{\textsc{rw}}}
-\newcommand{\causaltxs}{\txs_{\causalentry}}
-\newcommand{\strongtxs}{\txs_{\strongentry}}
-
+%%%%%%%%%%%%%%% axioms %%%%%%%%%%%%%%%
+\newcommand{\h}{\mathcal{H}}
+\renewcommand{\ae}{\mathcal{A}}
+\newcommand{\axiom}{\Phi}
+\newcommand{\rel}[1]{\xrightarrow{#1}}
+\newcommand{\comp}{\;;}
+\newcommand{\po}{{\sf po}}
+\newcommand{\so}{\textsc{so}}
+\newcommand{\sowt}{\textsc{so}_{\textsc{wt}}}
+\newcommand{\sors}{\textsc{so}_{\textsc{rs}}}
+\newcommand{\sosc}{\textsc{so}_{\textsc{sc}}}
+\newcommand{\rb}{\textsc{rb}}
+\newcommand{\rbwt}{\textsc{rb}_{\textsc{wt}}}
+\newcommand{\rbrs}{\textsc{rb}_{\textsc{rs}}}
+\newcommand{\rbsc}{\textsc{rb}_{\textsc{sc}}}
+\newcommand{\cb}{\textsc{cb}}
+\newcommand{\cbwt}{\textsc{cb}_\textsc{wt}}
+\newcommand{\cbrs}{\textsc{cb}_\textsc{rs}}
+\newcommand{\cbsc}{\textsc{cb}_\textsc{sc}}
+\newcommand{\vis}{\textsc{vis}}
+\newcommand{\viswt}{\textsc{vis}_{\textsc{wt}}}
+\newcommand{\visrs}{\textsc{vis}_{\textsc{rs}}}
+\newcommand{\vissc}{\textsc{vis}_{\textsc{sc}}}
+\newcommand{\ar}{\textsc{ar}}
+\newcommand{\arwt}{\textsc{ar}_{\textsc{wt}}}
+\newcommand{\arrs}{\textsc{ar}_{\textsc{rs}}}
+\newcommand{\arsc}{\textsc{ar}_{\textsc{sc}}}
+\newcommand{\hist}{\text{Hist}}
+\newcommand{\intaxiom}{\textsc{Int}}
+\newcommand{\extaxiom}{\textsc{Ext}}
+\newcommand{\sessionaxiom}{\textsc{Session}}
+\newcommand{\prefixaxiom}{\textsc{Prefix}}
+\newcommand{\rbaxiom}{\textsc{ReturnBefore}}
+\newcommand{\cbaxiom}{\textsc{CommitBefore}}
 \newcommand{\conflict}{\bowtie}
-
-% interfaces
-\newcommand{\intcertify}{{\sf certify}}
-\newcommand{\intdecide}{{\sf decide}}
-\newcommand{\intdeliver}{{\sf deliver}}
-\newcommand{\intdeliverinv}{{\sf deliver\_inv}}
-\newcommand{\intdeliverresp}{{\sf deliver\_resp}}
-
-\newcommand{\Decision}{\mathbb{D}}
-\newcommand{\Vector}{\mathbb{V}}
-\newcommand{\Key}{Key}
-\newcommand{\Val}{Val}
-
-\newcommand{\certify}{\textsc{certify}}
-\newcommand{\preparestrong}{\textsc{prepare\_strong}}
-\newcommand{\heartbeatstrong}{\textsc{heartbeat\_strong}}
-\newcommand{\getleader}{\textsf{get\_leader}}
-\newcommand{\getleaders}{\textsf{get\_leaders}}
-\newcommand{\alreadydecided}{\textsc{already\_decided}}
-\newcommand{\acceptack}{\textsc{accept\_ack}}
-\newcommand{\replicas}{\textsc{replicas}}
-\newcommand{\leader}{\textsc{leader}}
-\newcommand{\leaderof}{\textsf{leader}}
-\newcommand{\decision}{\textsc{decision}}
-\newcommand{\follower}{\textsc{follower}}
-\newcommand{\recover}{\textsc{recover}}
-\newcommand{\certification}{\textsc{certification\_check}}
-\newcommand{\deliver}{\textsc{deliver\_updates}}
-\newcommand{\newleader}{\textsc{new\_leader}}
-\newcommand{\newleaderack}{\textsc{new\_leader\_ack}}
-\newcommand{\newstate}{\textsc{new\_state}}
-\newcommand{\retry}{\textsc{retry}}
-
-\newcommand{\vote}{vote}
-\renewcommand{\leaders}{leaders}
-
-%% temp variables
-\newcommand{\preparevc}{prepareVec}
-\newcommand{\snapvc}{snapVec}
-\newcommand{\commitvc}{\mathit{commitVec}}
-\newcommand{\knownvc}{knownVec}
-\newcommand{\stablevc}{stableVec}
-\newcommand{\vpreparedstrong}{preparedStrong}
-\newcommand{\vdecidedstrong}{decidedStrong}
-%% states variables
-\newcommand{\knownVC}{{\sf knownVec}}
-\newcommand{\stableVC}{{\sf stableVec}}
-\newcommand{\snapVC}{{\sf snapVec}}
-\newcommand{\uniformVC}{{\sf uniformVec}}
-\newcommand{\localmatrix}{{\sf localMatrix}}
-\newcommand{\globalmatrix}{{\sf globalMatrix}}
-\newcommand{\stablematrix}{{\sf stableMatrix}}
-
-\newcommand{\tx}{\textsl{tx}}
-\newcommand{\tid}{tid} % parameter tid
-\newcommand{\ctid}{{\sf tid}} % client tid
-\newcommand{\rset}{{\sf rset}}
-\newcommand{\readset}{{\sf rs}}
-\newcommand{\wbuff}{{\sf wbuff}}
-\newcommand{\buff}{wbuff}
-\newcommand{\writeset}{{\sf ws}} % used only in comment now
-\newcommand{\clock}{{\sf clock}}
-\newcommand{\status}{{\sf status}}
-\newcommand{\committed}{{\sf committed}}
-\newcommand{\committedcausal}{{\sf committedCausal}}
-\newcommand{\preparedcausal}{{\sf preparedCausal}}
-\newcommand{\preparedstrong}{{\sf preparedStrong}}
-\newcommand{\decidedstrong}{{\sf decidedStrong}}
-\newcommand{\accept}{\textsc{accept}}
-\newcommand{\ballot}{{\sf ballot}}
-\newcommand{\cballot}{{\sf cballot}}
-\newcommand{\lastdelivered}{{\sf lastDelivered}}
-
-% fence
-\newcommand{\fence}{\textsc{fence}}
-\newcommand{\uniformbarrier}{\textsc{uniform\_barrier}}
-
-% migrate
-\newcommand{\migrate}{\textsc{migrate}}
-\newcommand{\attach}{\textsc{attach}}
-
-%% notations
-\renewcommand{\t}{T}
-\newcommand{\tsim}{T^{\sim}}
-\newcommand{\ttx}{T_{\textsc{tx}}}
-\newcommand{\ttxsim}{T^{\sim}_{\textsc{tx}}}
-
-%% events
-\newcommand{\intread}{R_{\textsc{int}}}
-\newcommand{\extread}{R_{\textsc{ext}}}
-\newcommand{\rocommit}{C_{\textsc{ro}}}
-\newcommand{\updatecommit}{C_{\textsc{rw}}}
-
-\newcommand{\ts}{\textsl{ts}}
-\newcommand{\lc}{{\textsf{lc}}}
-\newcommand{\lclock}{{\textsf{lclock}}}
-\newcommand{\lcorder}{\textsl{lc}}
-
-% unused in unistore-ts
-\newcommand{\lck}{\textsl{lc}_{k}}
-\newcommand{\lcu}{\texttt{lcu}}
-\newcommand{\request}{\texttt{req}}
-
-\newcommand{\id}{\textsl{Id}}
-\newcommand{\eo}{\textsl{eo}}
-\newcommand{\eok}{\textsl{eo}_{k}}
-\newcommand{\po}{\textsl{po}}
-\newcommand{\so}{\textsl{so}}
-\newcommand{\sotx}{\so_{\textsc{tx}}}
-\newcommand{\soop}{\so} % {\so_{\textsc{op}}}
-\newcommand{\rf}{\textsl{rf}}
-\renewcommand{\wr}{\textsl{WR}}
-\newcommand{\wrtx}{\wr_{\textsc{tx}}}
-\newcommand{\ww}{\textsl{WW}}
-\newcommand{\wwtx}{\ww_{\textsc{tx}}}
-\newcommand{\rw}{\textsl{RW}}
-\newcommand{\rwtx}{\rw_{\textsc{tx}}}
-\newcommand{\erf}{\textsl{erf}}
-\newcommand{\irf}{\textsl{irf}}
-\newcommand{\RF}{\textsl{RF}}
-\newcommand{\rftx}{\rf_{\textsc{tx}}}
-\newcommand{\hb}{\textsl{hb}}
-\newcommand{\vis}{\textsl{vis}}
-\newcommand{\vislc}{\textsl{vis}|_{\lclock}}
-\newcommand{\vistx}{\textsl{vis}_{\textsc{tx}}}
-\newcommand{\visop}{\vis} % {\textsl{vis}_{\textsc{op}}}
-\newcommand{\ar}{\textsl{ar}}
-\newcommand{\rel}[1]{\xrightarrow{#1}} % arrows for relations
-\newcommand{\nrel}[1]{\centernot{\xrightarrow{#1}}} % arrows for non-relations
-\newcommand{\relation}{\mathcal{R}}
-
-% kvs
-\newcommand{\f}{\mathcal{F}}
-\newcommand{\kvs}{\textsl{kvs}}
-\newcommand{\fkvs}{\mathcal{F}_{\textsl{kvs}}}
-\newcommand{\rval}{\textsl{rval}}
-\newcommand{\uval}{\textsl{uval}}
-
-% consistency
-\newcommand{\retval}{\textsc{RetVal}}
-\newcommand{\intretval}{\textsc{IntRetVal}}
-\newcommand{\extretval}{\textsc{ExtRetVal}}
-\newcommand{\cc}{\textsc{CausalConsistency}}
-\newcommand{\sr}{\textsc{Serializability}}
-\newcommand{\cv}{\textsc{CausalVisibility}}
-\newcommand{\ca}{\textsc{CausalArbitration}}
-\newcommand{\ev}{\textsc{EventualVisibility}}
-\newcommand{\EV}{\textsc{EV}}
-\newcommand{\sev}{\textsc{S-Eventual}}
-\newcommand{\tcc}{\textsc{TCC}}
-\newcommand{\por}{\textsc{PoR}}
-\newcommand{\causalityaxiom}{\textsc{Causality}}
-\newcommand{\conflictaxiom}{\textsc{ConflictOrdering}}
+\newcommand{\noconflictaxiom}{\textsc{NoConflict}}
+\newcommand{\realtimesnapshotaxiom}{\textsc{RealtimeSnapshot}}
+%%%%%%%%%%%%%%% axioms %%%%%%%%%%%%%%%

@@ -40,16 +40,25 @@
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
   \begin{center}
-	挑战一: MongoDB 官方规约不清楚, SI 有多种变体
+	挑战一： MongoDB 官方规约不清楚, SI 有多种变体
   \end{center}
+
+  \begin{columns}
+	\column{0.50\textwidth}
+	  \fig{width = 1.00\textwidth}{figs/SpeculativeSI}
+	\column{0.50\textwidth}
+	  \fig{width = 0.60\textwidth}{figs/SI-variants}
+  \end{columns}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
   \begin{center}
-	挑战二: MongoDB 缺少精简的事务协议描述, 更没有严格证明
+	挑战二： MongoDB 缺少精简的事务协议描述, 更没有严格证明
   \end{center}
+
+  \fig{width = 0.80\textwidth}{figs/mongodb-txn-spec}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
@@ -57,6 +66,9 @@
 \begin{frame}{}
   \begin{center}
 	挑战三: SI 检测问题是 \textsf{NP-complete} 问题, 复杂度高
+
+	\vspace{0.60cm}
+	\fig{width = 1.00\textwidth}{figs/SI-NPC}
   \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
@@ -64,7 +76,7 @@
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
   \begin{center}
-	贡献一: 
+	贡献一: 使用 $(\vis, \ar)$ 框架, 为多种 SI 变体提供形式化规约
   \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
@@ -72,15 +84,36 @@
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
   \begin{center}
-	贡献二: 
+	贡献二: 为 MongoDB 事务一致性协议提供精简的伪代码描述
   \end{center}
+
+  \vspace{0.50cm}
+  \begin{columns}
+	\column{0.50\textwidth}
+	  \fig{width = 0.80\textwidth}{figs/MongoDB-Docs}
+	\column{0.50\textwidth}
+	  \fig{width = 0.80\textwidth}{figs/MongoDB-Src}
+  \end{columns}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
   \begin{center}
-	贡献三: 
+	贡献三: 证明 $\wtalg$、$\rsalg$、$\scalg$ 事务协议
+	  分别满足 $\strongsi$、$\rtsi$、$\sessionsi$ 变体
   \end{center}
+
+  \fig{width = 0.80\textwidth}{figs/mongo-txn-si}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \begin{center}
+	贡献四: 设计并评估了多项式时间 SI 变体白盒检测算法
+  \end{center}
+
+  \fig{width = 0.75\textwidth}{figs/Jepsen-Logo}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
