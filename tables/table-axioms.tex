@@ -1,0 +1,33 @@
+% table-axioms.tex
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{2.0}
+  \resizebox{1.00\textwidth}{!}{%
+    \begin{tabular}{|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{
+	  $\begin{aligned}[c]
+		&\forall (\E, \po) \in \h.\;
+		  \forall \evar \in \Event.\;
+		    \forall \keyvar, \valvar.\;
+			  \big(\op(\evar) = \readevent(\keyvar, \valvar)
+			  \land \set{\fvar \mid (\op(\fvar) = \_(\keyvar, \_) \land \fvar \rel{\po} \evar} \neq \emptyset\big) \\
+			  &\quad \implies \op(\max_{\po} \set{\fvar \mid \op(\fvar) = \_(\keyvar, \_) \land \fvar \rel{\po} \evar}) = \_(\keyvar, \valvar)
+	   \end{aligned}$ \hfill (\intaxiom)} \\ \hline
+    \multicolumn{2}{|c|}{
+	  $\begin{aligned}[c]
+		\forall T \in \h.\; \forall \keyvar, \valvar.\; T \vdash \readevent(\keyvar, \valvar) \implies
+		  \max_{\ar}(\vis^{-1}(T) \cap \WriteTx_{\keyvar}) \vdash \writeevent(\keyvar, \valvar)
+	  \end{aligned}$ \hfill (\extaxiom)} \\ \hline
+    $\so \subseteq \vis$ \hfill (\sessionaxiom)
+	& $\ar \comp \vis \subseteq \vis$ \hfill (\prefixaxiom) \\ \hline
+	  $\rb \subseteq \vis$ \hfill (\rbaxiom)
+	& $\cb \subseteq \ar$ \hfill (\cbaxiom) \\ \hline
+	  $\vis \subseteq \rb$ \hfill (\realtimesnapshotaxiom)
+	& $\forall S, T \in \h.\; S \conflict T \implies (S \rel{\vis} T \lor T \rel{\vis} S)$
+	  \hfill (\noconflictaxiom) \\ \hline
+    \end{tabular}%
+  }
+\end{table}
+    %   $\forall S, T \in \h.\; S \rel{\vis} T \implies \starttime(T) > \committime(S)$

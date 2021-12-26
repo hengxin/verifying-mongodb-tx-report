@@ -1,0 +1,108 @@
+% si.tex
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \begin{columns}
+	\column{0.20\textwidth}
+	\column{0.60\textwidth}
+	  \begin{enumerate}
+	  	\setlength{\itemsep}{12pt}
+	  	\item 事务 $T:$ $(E, \po)$
+	  	  \begin{itemize}
+	  	    \setlength{\itemsep}{2pt}
+	  	    \item $\po:$ Program Order
+	  	    \item $\starttime(T):$ 事务开始时间
+	  	    \item $\committime(T):$ 事务提交时间
+	  	  \end{itemize}
+	  	\item 历史 $\h:$ $(\T, \so)$
+	  	  \begin{itemize}
+	  	    \setlength{\itemsep}{2pt}
+			\item $\T:$ 已提交事务集合
+	  	  	\item $\so:$ Session Order
+	  	  \end{itemize}
+	  	\item 执行 $\ae:$ $(\h, \vis, \ar)$
+	  	  \begin{itemize}
+	  	  	\setlength{\itemsep}{2pt}
+	  	  	\item $\vis:$ 可见性 (Visibility) 偏序关系
+	  	  	\item $\ar:$ 仲裁 (Arbitration) 全序关系
+	  	  	\item $\vis \subseteq \ar$
+	  	  \end{itemize}
+	  \end{enumerate}
+	\column{0.20\textwidth}
+  \end{columns}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \begin{center}
+	一个事务一致性模型可定义为一组一致性公理的集合 $\Phi$。
+
+	\vspace{0.80cm}
+	历史 $\h$ 满足事务一致性模型 $\Phi$,
+	如果存在 $\vis$ 与 $\ar$ 使得
+	\[
+	  \exists \vis, \ar.\; (\h, \vis, \ar) \models \Phi\text{。}
+	\]
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \input{tables/table-axioms}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \[
+	\si = \intaxiom \land \extaxiom \land \prefixaxiom \land \noconflictaxiom
+  \]
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \[
+	\sessionsi = \si \land \sessionaxiom
+  \]
+
+  \pause
+  \[
+	\rtsi = \si \land \rbaxiom \land \cbaxiom
+  \]
+
+  \pause
+  \[
+	\gsi = \si \land \rtsi \land \cbaxiom
+  \]
+
+  \pause
+  \[
+	\strongsi = \gsi \land \rbaxiom
+  \]
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \begin{columns}
+	\column{0.10\textwidth}
+	\column{0.40\textwidth}
+	  \begin{itemize}
+	  	\item \ansisi
+	  	\item \si
+	  	\item \gsi
+	  	\item \strongsi
+	  	\item \strongsessionsi
+	  	\item \parallelsi
+	  	\item \wsi
+	  	\item \nmsi
+	  	\item \pcsi
+	  \end{itemize}
+	\column{0.50\textwidth}
+	  \fig{width = 0.70\textwidth}{figs/SI-variants}
+  \end{columns}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
