@@ -162,3 +162,94 @@
 \newcommand{\fetchalldurablets}{\textsc{fetch\_all\_durable\_ts}}
 \newcommand{\wtsetcommitts}{\textsc{wt\_set\_commit\_ts}}
 %%%%%%%%%%%%%%% wt-tx %%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%% rs-tx %%%%%%%%%%%%%%%
+\newcommand{\RSTXN}{{\sf RS\_TXN}}
+\newcommand{\RSSID}{{\sf RS\_SID}}
+\newcommand{\RSSESSION}{{\sf RS\_SESSION}}
+\newcommand{\rssid}{{\sf rs\_sid}}
+\newcommand{\rssidvar}{\mathit{rs\_sid}}
+\newcommand{\rssession}{{\sf rs\_session}}
+\newcommand{\rssessionvar}{\mathit{rs\_session}}
+\newcommand{\isstartingtxn}{{\sf is\_starting}}
+\newcommand{\OPLOG}{\textsc{oplog}}
+\newcommand{\TS}{{\sf TS}}
+\newcommand{\ts}{{\sf ts}}
+\newcommand{\tsvar}{\mathit{ts}}
+\newcommand{\readts}{{\sf read\_ts}}
+\newcommand{\readtsvar}{\mathit{read\_ts}}
+\newcommand{\durablets}{{\sf durable\_ts}}
+\newcommand{\durabletsvar}{\mathit{durable\_ts}}
+\newcommand{\alldurabletsvar}{\mathit{all\_durable\_ts}}
+\newcommand{\committs}{{\sf commit\_ts}}
+\newcommand{\committsvar}{\mathit{commit\_ts}}
+\newcommand{\pinneddurablets}{{\sf pinned\_durable\_ts}}
+\newcommand{\pinneddurabletsvar}{\mathit{p\_durable\_ts}}
+\newcommand{\ops}{{\sf ops}}
+\newcommand{\opsvar}{\mathit{ops}}
+\newcommand{\oplog}{{\sf oplog}}
+\newcommand{\oplogvar}{\mathit{oplog}}
+\newcommand{\head}{\textsc{head}}
+\newcommand{\last}{\textsc{last}}
+\newcommand{\oplogreadts}{{\sf oplog\_read\_ts}}
+\newcommand{\oploglasttsvar}{\mathit{oplog\_last\_ts}}
+\newcommand{\rswtconns}{{\sf rs\_wt\_conns}}
+\newcommand{\TXNPART}{{\sf TXN\_PART}}
+\newcommand{\txnstate}{{\sf txn\_state}}
+\newcommand{\txnops}{{\sf txn\_ops}}
+\newcommand{\participants}{{\sf participants}}
+\newcommand{\participantvar}{{\mathit{p}}}
+\newcommand{\participantsvar}{\mathit{parts}}
+%% rs-client procedures
+\newcommand{\rsclopen}{\textsc{rs\_cl\_open}}
+\newcommand{\rsclclose}{\textsc{rs\_cl\_close}}
+\newcommand{\rsclstart}{\textsc{rs\_cl\_start}}
+\newcommand{\rsclread}{\textsc{rs\_cl\_read}}
+\newcommand{\rsclupdate}{\textsc{rs\_cl\_update}}
+\newcommand{\rsclcommit}{\textsc{rs\_cl\_commit}}
+%% rs-server procedures
+\newcommand{\rsopen}{\textsc{rs\_open}}
+\newcommand{\rsclose}{\textsc{rs\_close}}
+\newcommand{\rsstart}{\textsc{rs\_start}}
+\newcommand{\rsread}{\textsc{rs\_read}}
+\newcommand{\rsupdate}{\textsc{rs\_update}}
+\newcommand{\rscommit}{\textsc{rs\_commit}}
+\newcommand{\rsrollback}{\textsc{rs\_rollback}}
+%% utility procedures
+\newcommand{\uuid}{\textsc{uuid}}
+\newcommand{\openwtsession}{\textsc{open\_wt\_session}}
+%% clock
+\newcommand{\hlc}{\mathit{hlc}}
+\renewcommand{\sec}{\mathit{sec}}
+\newcommand{\counter}{\mathit{counter}}
+\newcommand{\ct}{\sf ct} % cluster\_time
+\newcommand{\ctvar}{\mathit{ct}}
+\newcommand{\ot}{\sf optime}
+\newcommand{\otvar}{\mathit{ot}}
+\newcommand{\clock}{\sf clock}
+\newcommand{\clockvar}{\mathit{clock}}
+\newcommand{\aot}{\sf aot}
+\newcommand{\tick}{\textsc{tick}}
+\newcommand{\dec}{\textsc{dec}}
+\newcommand{\merge}{\textsc{merge}}
+\newcommand{\compare}{\textsc{compare}}
+\newcommand{\noopwrite}{\textsc{noop}}
+\newcommand{\replicate}{\textsc{replicate}}
+\newcommand{\replication}{\textsc{replication}}
+\newcommand{\pulloplog}{\textsc{pull\_oplog}}
+\newcommand{\pushoplog}{\textsc{push\_oplog}}
+\newcommand{\replicavar}{\mathit{r}}
+\newcommand{\Primary}{\mathit{P}}
+\newcommand{\primary}{\textsc{primary}}
+\newcommand{\primaryvar}{\mathit{p}}
+\newcommand{\isprimary}{\textsc{is\_primary}}
+\newcommand{\issecondary}{\textsc{is\_secondary}}
+\newcommand{\secondaryvar}{\mathit{s}}
+\newcommand{\replicateack}{\textsc{replicate\_ack}}
+\newcommand{\majoritycommitted}{\textsc{majority\_committed}}
+\newcommand{\lastpulled}{{\sf last\_pulled}}
+\newcommand{\lastpulledacks}{{\sf last\_pulled\_ack}}
+\newcommand{\lastpulledvar}{\mathit{last\_pulled}}
+\newcommand{\lastmajoritycommitted}{{\sf last\_majority\_committed}}
+\newcommand{\lastmajoritycommittedvar}{\mathit{last\_majority\_committed}}
+%%%%%%%%%%%%%%% rs-tx %%%%%%%%%%%%%%%

@@ -12,6 +12,133 @@
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
+  \begin{center}
+	\rc = ``\snapshotrc'' and \wc = ``\majority''
+  \end{center}
+
+  \vspace{0.30cm}
+  \begin{description}
+	\setlength{\itemsep}{10pt}
+	\item[\rc = ``\snapshotrc'':] 保证事务读取到一致性的、被多数节点 \\[5pt] 提交的快照
+	\item[\wc = ``\majority'':] 保证事务中的写操作以及读到的数据 \\[5pt]
+	  被多数节点提交 (majority committed)
+  \end{description}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \begin{center}
+	主节点维护 \oplog, 并负责决定事务的提交顺序
+
+	\vspace{0.50cm}
+	\fig{width = 0.50\textwidth}{figs/oplog}
+
+	\pause
+	\vspace{0.50cm}
+	每个事务 $\txnvar$ 被赋予一个唯一的逻辑提交时间戳 $\txnvar.\committs$
+
+	\vspace{0.50cm}
+	这些逻辑时间戳确定了事务在 ReplicaSet 层的(逻辑)提交顺序
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \begin{center}
+	当事务 $\txnvar$ 开始时 ($\openwtsession$), \\[5pt]
+	计算它的``读时间戳'' ($\txnvar.\readts$)
+
+	\vspace{0.50cm}
+	\fig{width = 0.50\textwidth}{figs/oplog}
+
+	\vspace{0.50cm}
+	条件: \oplog{} 中所有提交时间戳小于 $\txnvar.\readts$ 的事务均已提交
+
+	\vspace{0.30cm}
+	($\txnvar.\readts$ 保证可见的事务在 \oplog{} 中不造成空洞)
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \begin{center}
+	\fig{width = 0.70\textwidth}{figs/SpeculativeSI}
+
+	\vspace{0.30cm}
+	\begin{itemize}
+	%   \setlength{\itemsep}{10pt}
+	  \item 事务读取 WiredTiger 层当前最新的数据, 而不限于已被多数节点提交的数据
+	  \item 当事务提交时, \emph{等待}读取到的数据被多数节点提交
+	\end{itemize}
+
+	\pause
+	只读事务在提交时发起``\noop''操作, 然后等待该操作被多数节点提交
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \fig{width = 0.90\textwidth}{figs/hlc}
+
+  \begin{columns}
+	\column{0.20\textwidth}
+	\column{0.60\textwidth}
+	  \input{procedures/hlc}
+	\column{0.20\textwidth}
+  \end{columns}
+
+  \pause
+  \vspace{0.30cm}
+  \begin{center}
+	\begin{itemize}
+	  \setlength{\itemsep}{6pt}
+	  \item 主节点的 cluster time ($\ct$) 仅在产生新的 \oplog{} 项时增加
+	  \item 每个消息都携带发送方的 $\ct$
+	  \item 每个节点(包括客户端)维护它已知的最大 $\ct$
+	\end{itemize}
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  visibility
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \begin{definition}[Visibility Relation]
+	\vspace{-0.30cm}
+	\begin{align*}
+      &\forall \txnvar_{1}, \txnvar_{2} \in \RSTXN.\;
+        \txnvar_{1} \rel{\visrs} \txnvar_{2} \iff \\
+        &\qquad \txnvar_{1}.\committs \le \txnvar_{2}.\readts.
+	\end{align*}
+  \end{definition}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \begin{definition}[Arbitration Relation]
+	Order all update transactions in $\arrs$ by their $\committs$.
+    For each client, we insert its read-only transactions
+    one by one in session order:
+    each read-only transaction $\txnvar$
+    on session $\rssessionvar$ is placed immediately
+    after the later (in $\arrs$) of
+    \begin{enumerate}[(1)]
+      \item the previous (in $\sors$) transaction of $\txnvar$
+        on session $\rssessionvar$, if any; and
+      \item the update transactions $\txnvar'$ (in $\arrs$)
+        such that $\txnvar' \rel{\visrs} \txnvar$.
+    \end{enumerate}
+  \end{definition}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 

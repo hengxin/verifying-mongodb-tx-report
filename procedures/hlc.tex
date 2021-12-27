@@ -1,0 +1,18 @@
+% hlc.tex
+
+\begin{algorithm}[H]
+  \begin{algorithmic}[1]
+    % \Statex Hybrid logical clocks are compared lexicographically:
+    \Procedure{\tick}{\null}
+      \label{line:procedure-tick}
+      \If{$\ct.\sec \geq \clock$}
+        \label{line:tick-sec-clock}
+        \State \Return $\langle \ct.\sec, \ct.\counter + 1 \rangle$
+        \label{line:tick-counter}
+      \Else
+        \State \Return $\langle \clock, 0 \rangle$
+        \label{line:tick-clock}
+      \EndIf
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
