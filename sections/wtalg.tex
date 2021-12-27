@@ -23,8 +23,11 @@
 	\item 事务开始时 (\wtstart), $\txnvar.\tid = 0$
 	\item 事务第一个写操作成功执行后 (\wtupdate), $\txnvar.\tid > 0$
 	\item 事务因写冲突回滚时 (\wtrollback), $\txnvar.\tid = -1$
+	\pause
+	\item $\wttidnone$ 表示\emph{不存在}这个事务
   \end{itemize}
 
+  \pause
   \vspace{0.20cm}
   \begin{center}
 	对于只读事务 $\txnvar$, 始终有 $\txnvar.\tid = 0$
@@ -38,6 +41,7 @@
 	\setlength{\itemsep}{10pt}
 	\item 客户端通过会话 (Session) 与 WiredTiger 进行交互
 	\item 每个会话有一个唯一会话标识号 $\wtsidvar \in \WTSID = \mathbb{N}$
+	\pause
 	\item WiredTiger 维护数据结构 $\wttxnglobal \in [\currenttid : \TID, \states : \WTSID \to \TID]$
 	  \vspace{5pt}
 	  \begin{description}
@@ -45,6 +49,12 @@
 		\item[$\currenttid:$] 当前分配的最大事务标识号
 		\item[$\states:$] 会话与会话之上当前事务之间的映射关系
 	  \end{description}
+
+	  \pause
+	  \vspace{0.30cm}
+	  \begin{center}
+		事务 $\txnvar$ 提交或回滚时, $\wttxnglobal.\states[\wtsidvar] \gets \wttxnnone$
+	  \end{center}
   \end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
@@ -88,15 +98,58 @@
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
   \input{procedures/wt-visible}
+
+  \begin{center}
+	对于事务 $\txnvar$, 满足以下条件的、标识号等于 $\tidvar$ 的事务对 $\txnvar$ \emph{不可见}:
+  \end{center}
+  \begin{itemize}
+	\setlength{\itemsep}{10pt}
+	\item $\tidvar = -1:$ 该事务已回滚
+	\item $\tidvar \in \txnvar.snapshot:$ 该事务与 $\txnvar$ 并发
+	\item $\tid \ge \txnvar.\snapshot \land \tid \neq \txnvar.\tid:$
+	  \vspace{0.20cm}
+	  \begin{itemize}
+		\setlength{\itemsep}{5pt}
+		\item $\tid \ge \txnvar.\snapshot:$ 该事务开始得比 $\txnvar$ 晚
+		\item $\tid \neq \txnvar.\tid:$ 允许 $\txnvar$ 观察到自身
+	  \end{itemize}
+  \end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
+  \begin{center}
+	每个事务观察到在它开始之前提交的事务
+  \end{center}
+
+  \begin{definition}[Visibility Relation]
+	\[
+	  \viswt \triangleq \rbaxiom.
+	\]
+  \end{definition}
+
+  \vspace{0.80cm}
+  \begin{center}
+	在逻辑上, 所有事务按实时序依次提交
+  \end{center}
+  \begin{definition}[Arbitration Relation]
+	\[
+	  \arwt \triangleq \cbaxiom.
+	\]
+  \end{definition}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
+  \begin{lemma}[冲突事务的提交顺序]
+	\vspace{-0.30cm}
+    \begin{align*}
+      &\forall \txnvar, \txnvar' \in \WTTXN.\; \\
+        &\quad \txnvar \conflict \txnvar' \implies (\txnvar \rel{\arwt} \txnvar'
+          \iff \txnvar.\tid < \txnvar'.\tid).
+    \end{align*}
+  \end{lemma}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
