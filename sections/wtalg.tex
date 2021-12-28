@@ -2,6 +2,25 @@
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
+  \fig{width = 0.50\textwidth}{figs/protocol}
+  \fig{width = 0.65\textwidth}{figs/proof}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \begin{center}
+	\fig{width = 0.80\textwidth}{figs/mongo-txn-si}
+
+	\vspace{0.20cm}
+	重点在于如何确定每个事务的``读快照'' (Read Snapshot), \\[5pt]
+	也就是对该事务可见的所有事务构成的集合
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
   \fig{width = 0.75\textwidth}{figs/wt}
 
   \[
@@ -23,7 +42,6 @@
 	\item 事务开始时 (\wtstart), $\txnvar.\tid = 0$
 	\item 事务第一个写操作成功执行后 (\wtupdate), $\txnvar.\tid > 0$
 	\item 事务因写冲突回滚时 (\wtrollback), $\txnvar.\tid = -1$
-	\pause
 	\item $\wttidnone$ 表示\emph{不存在}这个事务
   \end{itemize}
 
@@ -129,6 +147,7 @@
 	\]
   \end{definition}
 
+  \pause
   \vspace{0.80cm}
   \begin{center}
 	在逻辑上, 所有事务按实时序依次提交
@@ -156,5 +175,16 @@
   \begin{center}
 	该引理对 \strongsi{} 检测算法有辅助作用
   \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \fig{width = 0.75\textwidth}{figs/wt}
+
+  \begin{align*}
+	\strongsi = \si &\land \red{\realtimesnapshotaxiom} \land \red{\rbaxiom} \\
+					&\land \red{\cbaxiom}
+  \end{align*}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%

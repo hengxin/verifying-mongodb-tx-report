@@ -2,6 +2,12 @@
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
+  \fig{width = 0.60\textwidth}{figs/spec-logo}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
   \begin{columns}
 	\column{0.20\textwidth}
 	\column{0.60\textwidth}
@@ -50,13 +56,16 @@
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
-  \input{tables/table-axioms}
+  \[
+	\textsc{ReadAtomic} = \intaxiom \land \extaxiom
+  \]
 
+  \input{tables/table-axioms}
   \vspace{0.30cm}
+
   \[
 	S \rel{\rb} T \iff \committime(S) < \starttime(T)
   \]
-
   \[
 	S \rel{\cb} T \iff \committime(S) < \committime(T)
   \]
@@ -84,7 +93,7 @@
 
   \pause
   \[
-	\gsi = \si \land \rtsi \land \cbaxiom
+	\gsi = \si \land \realtimesnapshotaxiom \land \cbaxiom
   \]
 
   \pause
@@ -96,6 +105,11 @@
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
+  \uncover<2->{
+	\[
+		\transvisaxoim \triangleq (\vis^{+} = \vis)
+	\]}
+
   \begin{columns}
 	\column{0.10\textwidth}
 	\column{0.40\textwidth}
@@ -105,25 +119,46 @@
 	  	\item \gsi
 	  	\item \strongsi
 	  	\item \strongsessionsi
-	  	\item \parallelsi
-	  	\item \wsi
-	  	\item \nmsi
+	  	\item \blue{\parallelsi}
+	  	\item \gray{\wsi}
+	  	\item \gray{\nmsi}
 	  	\item \pcsi
 	  \end{itemize}
 	\column{0.50\textwidth}
 	  \fig{width = 0.70\textwidth}{figs/SI-variants}
   \end{columns}
+
+  \pause
+  \vspace{0.50cm}
+  \[
+	\blue{\parallelsi} = \intaxiom \land \extaxiom \land \transvisaxoim \land \noconflictaxiom
+  \]
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
-  \begin{center}
-	\fig{width = 0.80\textwidth}{figs/mongo-txn-si}
+  \fig{width = 0.50\textwidth}{figs/nmsi-paper}
 
-	\vspace{0.20cm}
-	重点在于如何确定每个事务的``读快照'' (Read Snapshot), \\[5pt]
-	也就是对该事务可见的所有事务构成的集合
+  \vspace{0.30cm}
+  \begin{center}
+	\nmsi{}
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \fig{width = 0.60\textwidth}{figs/wsi-paper}
+
+  \vspace{0.60cm}
+  \begin{center}
+	\wsi{} 避免读-写冲突, 而不是写-写冲突 (\si: \textsc{Read}\si)
+
+	\[
+	  \wsi \subseteq \textsc{SER} \qquad
+	  \si \not\subset \textsc{SER}
+	\]
   \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%

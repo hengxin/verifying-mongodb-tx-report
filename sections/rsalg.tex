@@ -19,9 +19,9 @@
   \vspace{0.30cm}
   \begin{description}
 	\setlength{\itemsep}{10pt}
-	\item[\rc = ``\snapshotrc'':] 保证事务读取到一致性的、被多数节点 \\[5pt] 提交的快照
+	\item[\rc = ``\snapshotrc'':] 保证事务读取到一致性的、\\[5pt] 被多数节点提交的快照
 	\item[\wc = ``\majority'':] 保证事务中的写操作以及读到的数据 \\[5pt]
-	  被多数节点提交 (majority committed)
+	  被多数节点提交
   \end{description}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
@@ -47,8 +47,7 @@
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
   \begin{center}
-	当事务 $\txnvar$ 开始时 ($\openwtsession$), \\[5pt]
-	计算它的``读时间戳'' ($\txnvar.\readts$)
+	当事务 $\txnvar$ 开始时, 计算它的``读时间戳'' ($\txnvar.\readts$)
 
 	\vspace{0.50cm}
 	\fig{width = 0.50\textwidth}{figs/oplog}
@@ -81,6 +80,7 @@
 	\end{itemize}
 
 	\pause
+	\vspace{0.10cm}
 	只读事务在提交时发起``\noop''操作, 然后等待该操作被多数节点提交
   \end{center}
 \end{frame}
@@ -154,5 +154,19 @@
 		\end{itemize}
 	\end{itemize}
   \end{definition}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \fig{width = 0.50\textwidth}{figs/mongodb-replica-set}
+
+  \[
+	\rtsi = \si \land \red{\rbaxiom} \land \red{\cbaxiom}
+  \]
+
+  \begin{center}
+	由主从架构、复制与多数节点提交机制、读时间戳设置策略共同保障
+  \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%

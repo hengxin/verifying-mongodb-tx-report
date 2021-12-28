@@ -87,15 +87,14 @@
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
-  \[
-  	\scalg \models \sessionsi
-  \]
   \fig{width = 0.55\textwidth}{figs/mongodb-shard}
+
   \[
-  	\sosc \subseteq \vissc
+  	\sessionsi = \si \land \red{\sessionaxiom}
   \]
+
   \begin{center}
-    由节点维护并分发逻辑时间戳的机制保障
+    由逻辑时间戳的维护与分发机制保障
   \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
