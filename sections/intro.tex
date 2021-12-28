@@ -10,7 +10,7 @@
 \begin{frame}{}
 %   \fig{width = 1.00\textwidth}{figs/mongodb-txn}
   \begin{center}
-	MongoDB 的三种经典部署架构
+    MongoDB 的三种经典部署架构
   \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
@@ -27,13 +27,12 @@
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
   \begin{center}
-	\emph{\Large A Fundamental Question:} \\[20pt]
+	  {\large 一个基本问题:} \\[20pt]
 
-	\begin{quote}
-	  {\large What transactional consistency guarantee do MongoDB transactions
-	  in each deployment provide?}
-	\end{quote}
-  \end{center}
+    每种部署下, MongoDB 事务协议提供怎样的事务一致性?
+	  % {\large What transactional consistency guarantee do MongoDB transactions
+	  % in each deployment provide?}
+	\end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
@@ -76,7 +75,11 @@
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
   \begin{center}
-	贡献一: 使用 $(\vis, \ar)$ 框架, 为多种 SI 变体提供形式化规约
+    贡献一: 使用 $(\vis, \ar)$ 框架, 为多种 SI 变体提供形式化规约
+
+    \[
+      \sessionsi \qquad \rtsi \qquad \gsi \qquad \strongsi \qquad \dots
+    \]
   \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
@@ -100,8 +103,8 @@
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
   \begin{center}
-	贡献三: 证明 $\wtalg$、$\rsalg$、$\scalg$ 事务协议
-	  分别满足 $\strongsi$、$\rtsi$、$\sessionsi$ 变体
+    贡献三: 证明 $\wtalg$、$\rsalg$、$\scalg$ \\[5pt]
+    事务协议分别满足 $\strongsi$、$\rtsi$、$\sessionsi$ 变体
   \end{center}
 
   \fig{width = 0.80\textwidth}{figs/mongo-txn-si}
