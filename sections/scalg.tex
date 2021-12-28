@@ -5,7 +5,7 @@
   \fig{width = 0.55\textwidth}{figs/mongodb-shard}
 
   \[
-	\scalg \models \sessionsi
+  	\scalg \models \sessionsi
   \]
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
@@ -32,15 +32,70 @@
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
+  \begin{center}
+    monogs 为事务指定快照时间戳 (\readts)
+
+    \vspace{0.50cm}
+    逻辑时间戳是松散同步的, 在某些分区上该快照尚不可得
+  \end{center}
+
+  \pause
+  \vspace{0.50cm}
+  \begin{description}
+    \setlength{\itemsep}{10pt}
+    \item[\caseclockskew:] 如果 $\ct < \readts$, 则先推进 $\ct$
+    \item[\casependingcommitread:] 如果可见的写操作是 \\[5pt] \wtprepareinprogress{} 状态, 则重试读
+    \item[\casependingcommitupdate] 如果可见的写操作是 \\[5pt] \wtprepareinprogress{} 状态, 则先重试读
+    \item[\caseholes:] 等待直到 \oplog{} 中 $\committs \le \readts$ 的事务均提交
+  \end{description}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
+  \begin{definition}[可见关系 $\vissc$]
+    \vspace{-0.30cm}
+    \begin{align*}
+      &\forall \txnvar_{1}, \txnvar_{2} \in \SCTXN.\;
+        \txnvar_{1} \rel{\vissc} \txnvar_{2} \iff \\
+        &\qquad \txnvar_{1}.\committs \le \txnvar_{2}.\readts.
+    \end{align*}
+  \end{definition}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
+  \begin{definition}[仲裁关系 $\arsc$]
+	  \begin{itemize}
+	    \setlength{\itemsep}{10pt}
+	    \item 非只读事务按照它们的 $\committs$ 在 $\arsc$ 中排序 \\[5pt]
+        \begin{itemize}
+          \item 相同的 $\committs$ 根据事务协调者所在的分区 $\shardid$ 定序
+        \end{itemize}
+	    \item 对于每个客户端, 将只读事务按照会话序依次插入 $\arsc$。\\[5pt]
+	      具体而言, 会话 $\scsessionvar$ 上的只读事务 $\txnvar$ 紧随以下事务之后: \\[5pt]
+	      \begin{itemize}
+	  	    \setlength{\itemsep}{5pt}
+          \item $\txnvar$ 在 $\sosc$ 序下的前一个事务 (如果有),
+          \item 非只读事务 $\txnvar'$ 满足 $\txnvar' \rel{\vissc} \txnvar$。
+        \end{itemize}
+    \end{itemize}
+  \end{definition}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \[
+  	\scalg \models \sessionsi
+  \]
+  \fig{width = 0.55\textwidth}{figs/mongodb-shard}
+  \[
+  	\sosc \subseteq \vissc
+  \]
+  \begin{center}
+    由节点维护并分发逻辑时间戳的机制保障
+  \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%

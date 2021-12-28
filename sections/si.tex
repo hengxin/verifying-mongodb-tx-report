@@ -10,7 +10,7 @@
 	  	\item 事务 $T:$ $(E, \po)$
 	  	  \begin{itemize}
 	  	    \setlength{\itemsep}{2pt}
-	  	    \item $\po:$ Program Order
+	  	    \item $\po:$ 程序序 (Program Order)
 	  	    \item $\starttime(T):$ 事务开始时间
 	  	    \item $\committime(T):$ 事务提交时间
 	  	  \end{itemize}
@@ -18,12 +18,12 @@
 	  	  \begin{itemize}
 	  	    \setlength{\itemsep}{2pt}
 			\item $\T:$ 已提交事务集合
-	  	  	\item $\so:$ Session Order
+	  	  	\item $\so:$ 会话序 (Session Order)
 	  	  \end{itemize}
 	  	\item 执行 $\ae:$ $(\h, \vis, \ar)$
 	  	  \begin{itemize}
 	  	  	\setlength{\itemsep}{2pt}
-	  	  	\item $\vis:$ 可见性 (Visibility) 偏序关系
+	  	  	\item $\vis:$ 可见 (Visibility) 偏序关系
 	  	  	\item $\ar:$ 仲裁 (Arbitration) 全序关系
 	  	  	\item $\vis \subseteq \ar$
 	  	  \end{itemize}
@@ -36,13 +36,13 @@
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
   \begin{center}
-	一个事务一致性模型可定义为一组一致性公理的集合 $\Phi$。
+	一个事务一致性模型可定义为一组一致性公理的集合 $\Phi$
 
 	\vspace{0.80cm}
 	历史 $\h$ 满足事务一致性模型 $\Phi$,
 	如果存在 $\vis$ 与 $\ar$ 使得
 	\[
-	  \exists \vis, \ar.\; (\h, \vis, \ar) \models \Phi\text{。}
+	  \exists \vis, \ar.\; (\h, \vis, \ar) \models \Phi
 	\]
   \end{center}
 \end{frame}
@@ -51,6 +51,15 @@
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
   \input{tables/table-axioms}
+
+  \vspace{0.30cm}
+  \[
+	S \rel{\rb} T \iff \committime(S) < \starttime(T)
+  \]
+
+  \[
+	S \rel{\cb} T \iff \committime(S) < \committime(T)
+  \]
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 

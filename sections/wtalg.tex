@@ -123,9 +123,9 @@
 	每个事务观察到在它开始之前提交的事务
   \end{center}
 
-  \begin{definition}[Visibility Relation $\viswt$]
+  \begin{definition}[可见关系 $\viswt$]
 	\[
-	  \viswt \triangleq \rbaxiom.
+	  \viswt \triangleq \rbaxiom
 	\]
   \end{definition}
 
@@ -133,9 +133,9 @@
   \begin{center}
 	在逻辑上, 所有事务按实时序依次提交
   \end{center}
-  \begin{definition}[Arbitration Relation $\arwt$]
+  \begin{definition}[仲裁关系 $\arwt$]
 	\[
-	  \arwt \triangleq \cbaxiom.
+	  \arwt \triangleq \cbaxiom
 	\]
   \end{definition}
 \end{frame}
@@ -151,5 +151,10 @@
           \iff \txnvar.\tid < \txnvar'.\tid).
     \end{align*}
   \end{lemma}
+
+  \vspace{0.60cm}
+  \begin{center}
+	该引理对 \strongsi{} 检测算法有辅助作用
+  \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%

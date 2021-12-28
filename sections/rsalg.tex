@@ -112,7 +112,7 @@
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
-  \begin{definition}[Visibility Relation $\visrs$]
+  \begin{definition}[可见关系 $\visrs$]
 	\vspace{-0.30cm}
 	\begin{align*}
       &\forall \txnvar_{1}, \txnvar_{2} \in \RSTXN.\;
@@ -127,7 +127,7 @@
 \begin{frame}{}
   \begin{lemma}[WiredTiger 与 ReplicaSet 层可见关系]
 	\[
-	  \visrs \subseteq \viswt.
+	  \visrs \subseteq \viswt
 	\]
   \end{lemma}
 
@@ -141,7 +141,7 @@
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
-  \begin{definition}[Arbitration Relation $\arrs$]
+  \begin{definition}[仲裁关系 $\arrs$]
 	\begin{itemize}
 	  \setlength{\itemsep}{10pt}
 	  \item 非只读事务按照它们的 $\committs$ 在 $\arrs$ 中排序

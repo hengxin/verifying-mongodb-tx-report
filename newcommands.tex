@@ -257,3 +257,102 @@
 % style
 \newcommand{\rsstyle}[1]{\underline{#1}} % replica set
 \newcommand{\scstyle}[1]{\colorbox{lightgray}{$#1$}} % sharded cluster
+
+%%%%%%%%%%%%%%% sc-tx %%%%%%%%%%%%%%%
+% variables
+\newcommand{\SCTXN}{{\sf SC\_TXN}}
+\newcommand{\ShardID}{{\sf SHARD\_ID}}
+\newcommand{\shardid}{{\sf shard\_id}}
+\newcommand{\shardidvar}{\mathit{shard\_id}}
+\newcommand{\svar}{\mathit{s}} % used in sc-variables.tex
+\newcommand{\shardsvar}{\mathit{L}} % set of shards
+\newcommand{\shardvar}{\mathit{l}} % individual shard
+\newcommand{\TXNROUTER}{{\sf TXN\_ROUTER}}
+\newcommand{\scroutertable}{{\sf router\_table}}
+\newcommand{\routervar}{\mathit{router}}
+\newcommand{\atclustertime}{{\sf at\_cluster\_time}}
+\newcommand{\coordid}{{\sf coord\_id}}
+\newcommand{\coordvar}{\mathit{l}_{\mathit{c}}}
+\newcommand{\iscoord}{{\sf is\_coord}}
+\newcommand{\status}{{\sf status}}
+\newcommand{\statusvar}{\mathit{status}}
+\newcommand{\inactive}{\textsc{inactive}}
+\newcommand{\waitparticipants}{\textsc{wait\_participants}}
+\newcommand{\waitvotes}{\textsc{wait\_votes}}
+\newcommand{\writedec}{\textsc{write\_decision}}
+\newcommand{\waitdecacks}{\textsc{wait\_decision\_acks}}
+\newcommand{\delcoord}{\textsc{del\_coord}}
+\newcommand{\readonly}{{\sf read\_only}}
+\newcommand{\responsevar}{\mathit{response}}
+\newcommand{\scrsconns}{{\sf sc\_rs\_conns}}
+\newcommand{\scrsconnsvar}{\mathit{sc\_rs\_conns}}
+
+% unspecified
+\newcommand{\shardof}{\textsc{shard\_of}}
+\newcommand{\primaryof}{\textsc{primary\_of}}
+
+% sc client
+\newcommand{\scclopen}{\textsc{sc\_cl\_open}}
+\newcommand{\scclstart}{\textsc{sc\_cl\_start}}
+\newcommand{\scclread}{\textsc{sc\_cl\_read}}
+\newcommand{\scclupdate}{\textsc{sc\_cl\_update}}
+\newcommand{\scclcommit}{\textsc{sc\_cl\_commit}}
+\newcommand{\scclrollback}{\textsc{sc\_cl\_rollback}}
+\newcommand{\scclclose}{\textsc{sc\_cl\_close}}
+
+\newcommand{\SCSESSION}{{\sf SC\_SESSION}}
+\newcommand{\scsession}{{\sf sc\_session}}
+\newcommand{\scsessionvar}{\mathit{sc\_session}}
+\newcommand{\roshards}{\mathit{ro\_shards}}
+
+% sc mongos (router)
+\newcommand{\scmongosopen}{\textsc{sc\_mongos\_open}}
+\newcommand{\scmongosstart}{\textsc{sc\_mongos\_start}}
+\newcommand{\scmongosread}{\textsc{sc\_mongos\_read}}
+\newcommand{\scmongosupdate}{\textsc{sc\_mongos\_update}}
+\newcommand{\scmongoscommit}{\textsc{sc\_mongos\_commit}}
+\newcommand{\twopc}{\textsc{2pc}}
+\newcommand{\twopcack}{\textsc{2pc\_ack}}
+\newcommand{\continue}{\textsc{continue}}
+\newcommand{\fieldsvar}{\mathit{fields}}
+\newcommand{\mongosvar}{\mathit{m}}
+
+% sc participants
+\newcommand{\scread}{\textsc{sc\_read}}
+\newcommand{\waitforreadconcern}{\textsc{wait\_for\_read\_concern}}
+\newcommand{\scupdate}{\textsc{sc\_update}}
+\newcommand{\scstart}{\textsc{sc\_start}}
+\newcommand{\prepare}{\textsc{prepare}}
+\newcommand{\prepareack}{\textsc{prepare\_ack}}
+\newcommand{\commit}{\textsc{commit}}
+\newcommand{\committed}{{\sf committed}}
+\newcommand{\abort}{\textsc{abort}}
+\newcommand{\decack}{\textsc{decision\_ack}}
+\newcommand{\updateoplogvisibility}{\textsc{update\_oplog\_visibility}}
+
+\newcommand{\wtprepare}{\textsc{wt\_prepare}}
+\newcommand{\wtprepareinprogress}{\textsc{wt\_prepared}}
+\newcommand{\wtprepareresolved}{\textsc{wt\_committed}}
+\newcommand{\wtsetreadts}{\textsc{wt\_set\_read\_ts}}
+
+\newcommand{\commitdecision}{{\sf commit}}
+\newcommand{\abortdecision}{{\sf abort}}
+
+\newcommand{\preparets}{{\sf prepare\_ts}}
+\newcommand{\preparetsvar}{\mathit{prepare\_ts}}
+\newcommand{\votevar}{\mathit{vote}}
+\newcommand{\decvar}{\mathit{decision}}
+
+\newcommand{\wtcommitprepare}{\textsc{wt\_commit\_prepare}}
+\newcommand{\wtcommitpreparets}{\textsc{wt\_commit\_prepare\_ts}}
+
+\newcommand{\waitproc}{\textsc{wait}}
+\newcommand{\notifyall}{\textsc{notify\_all}}
+\newcommand{\preparecommittedorabortedcond}{{\sf decided\_cond}}
+
+\newcommand{\case}{\textsc{Case}}
+\newcommand{\caseclockskew}{\case-\textsc{Clock-Skew}}
+\newcommand{\casependingcommitread}{\case-\textsc{Pending-Commit-Read}}
+\newcommand{\casependingcommitupdate}{\case-\textsc{Pending-Commit-Update}}
+\newcommand{\caseholes}{\case-\textsc{Holes}}
+%%%%%%%%%%%%%%% sc-tx %%%%%%%%%%%%%%%
