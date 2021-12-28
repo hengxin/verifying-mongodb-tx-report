@@ -64,6 +64,12 @@
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
+  \input{procedures/rs-visible}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
   \begin{center}
 	\fig{width = 0.70\textwidth}{figs/SpeculativeSI}
 
@@ -106,13 +112,7 @@
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
-  visibility
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{}
-  \begin{definition}[Visibility Relation]
+  \begin{definition}[Visibility Relation $\visrs$]
 	\vspace{-0.30cm}
 	\begin{align*}
       &\forall \txnvar_{1}, \txnvar_{2} \in \RSTXN.\;
@@ -125,24 +125,34 @@
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
-  \begin{definition}[Arbitration Relation]
-	Order all update transactions in $\arrs$ by their $\committs$.
-    For each client, we insert its read-only transactions
-    one by one in session order:
-    each read-only transaction $\txnvar$
-    on session $\rssessionvar$ is placed immediately
-    after the later (in $\arrs$) of
-    \begin{enumerate}[(1)]
-      \item the previous (in $\sors$) transaction of $\txnvar$
-        on session $\rssessionvar$, if any; and
-      \item the update transactions $\txnvar'$ (in $\arrs$)
-        such that $\txnvar' \rel{\visrs} \txnvar$.
-    \end{enumerate}
-  \end{definition}
+  \begin{lemma}[WiredTiger 与 ReplicaSet 层可见关系]
+	\[
+	  \visrs \subseteq \viswt.
+	\]
+  \end{lemma}
+
+  \vspace{0.50cm}
+  \begin{center}
+	\rsalg{} 使用逻辑时间戳``覆写'' (override) 了 \\[5pt]
+	\wtalg{} 中的事务标识号
+  \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
+  \begin{definition}[Arbitration Relation $\arrs$]
+	\begin{itemize}
+	  \setlength{\itemsep}{10pt}
+	  \item 非只读事务按照它们的 $\committs$ 在 $\arrs$ 中排序
+	  \item 对于每个客户端, 将只读事务按照会话序依次插入 $\arrs$。\\[5pt]
+	    具体而言, 会话 $\rssessionvar$ 上的只读事务 $\txnvar$ 紧随以下事务之后: \\[5pt]
+	    \begin{itemize}
+		  \setlength{\itemsep}{5pt}
+		  \item $\txnvar$ 在 $\sors$ 序下的前一个事务 (如果有),
+		  \item 非只读事务 $\txnvar'$ 满足 $\txnvar' \rel{\visrs} \txnvar$。
+		\end{itemize}
+	\end{itemize}
+  \end{definition}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
