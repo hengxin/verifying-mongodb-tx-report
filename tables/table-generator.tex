@@ -1,0 +1,21 @@
+% table-generator.tex
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{2.0}
+  \resizebox{1.00\textwidth}{!}{%
+  \begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{Parameter} & \textbf{Value(s)} & \textbf{Description}                                                                                                \\ \hline
+    key-count          & 10  & There are 10 distinct keys at any point for generation.                                                              \\ \hline
+    key-dist           & exponential  & Probability distribution on keys. \\ \hline
+    max-txn-length      & \set{4, 8, 12}   & Each transaction contains at most 4/8/12 operations.                                                                    \\ \hline
+    max-updates-per-key & 128      & There are at most 128 updates on each key. \\ \hline
+    read:update ratio  & 1 : 1 & The default (and fixed) read:update ration in Jepsen. \\ \hline
+    wt-duration           & \set{10s, 20s, 30s, 40s, 50s, 60s} & The duration of an experiment on WiredTiger. \\ \hline
+    rs-duration           & \set{1min, 2min, 3min, 4min, 5min} & The duration of an experiment on replica set . \\ \hline
+    sc-duration           & \set{1min, 2min, 3min, 4min, 5min, 8min} & The duration of an experiment on sharded cluster. \\ \hline
+    wt/rs/sc-timeout & 5s/10s/30s & \begin{tabular}[c]{@{}c@{}}Transaction timeout for experiments on \\
+        WiredTiger, replica set, and sharded cluster, respectively.\end{tabular} \\ \hline
+  \end{tabular}}
+\end{table}

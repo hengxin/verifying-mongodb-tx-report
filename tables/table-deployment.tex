@@ -1,0 +1,24 @@
+% table-deployment.tex
+
+\begin{table}[H]
+  \centering
+  \renewcommand{\arraystretch}{2.0}
+  \resizebox{1.00\textwidth}{!}{%
+  \begin{tabular}{|c|c|c|c|}
+      \hline
+      \textbf{Deployment} & \textbf{Version}
+          & \textbf{Configuration} & \textbf{OS} \\ \hline
+      Standalone          & WiredTiger 3.3.0
+          & A WiredTiger storage engine   & Ubuntu 20.04  \\ \hline
+      Replica Set         & \multirow{2}{*}{MongoDB 4.2.8}
+        & A replica set of 5 nodes
+        & \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}
+          \\ Each database node runs in a Docker \\
+          container built with the Debian 10 image.\end{tabular}} \\ \cline{1-1} \cline{3-3}
+      Sharded Cluster     &
+        & \begin{tabular}[c]{@{}c@{}}A cluster consists of 1 config server and 2 shards. \\
+          Each shard is a replica set of 3 nodes. \\
+          Each node has a mongos instance.\end{tabular}
+        & \\ \hline
+  \end{tabular}}
+\end{table}

@@ -1,0 +1,92 @@
+% checking.tex
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \fig{width = 0.50\textwidth}{figs/checking}
+
+  \begin{center}
+	多项式时间 SI 变体白盒检测算法
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \fig{width = 0.30\textwidth}{figs/basic-idea}
+
+  \begin{enumerate}[(1)]
+	\setlength{\itemsep}{6pt}
+	\item 收集事务协议产生的历史执行
+	\item 根据证明中的定义构造 $\vis$ 与 $\ar$ 关系
+	\item 检查 $\vis$ 与 $\ar$ 关系是否满足相应的 $\si$ 变体所需的公理
+  \end{enumerate}
+
+  \pause
+  \vspace{0.20cm}
+  \begin{center}
+	第 (2) 中构造的 $\ar$ 是全序关系, 提供了 Version Order, \\[5pt]
+	第 (3) 步可以在多项式时间内完成
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \begin{center}
+	如何从历史执行中获取必要的信息, 以构造 $\vis$ 与 $\ar$ 关系:
+  \end{center}
+
+  \vspace{0.30cm}
+  \begin{description}[$\scalg:$]
+	\setlength{\itemsep}{10pt}
+	\item[$\wtalg:$] 记录事务的开始与提交时间, 利用前述引理校正
+	\item[$\rsalg:$] 分别从 \texttt{mongod.log} 与 \texttt{oplog.rs} 中获取 \\[5pt]
+	  事务的读时间戳与提交时间戳
+	\item[$\scalg:$] 分别从 \texttt{mongod.log} 与分区主节点 \oplog{} 中获取 \\[5pt]
+	  事务的读时间戳与提交时间戳
+  \end{description}
+
+  \vspace{0.20cm}
+  \begin{lemma}[冲突事务的提交顺序]
+	\vspace{-0.30cm}
+    \begin{align*}
+      &\forall \txnvar, \txnvar' \in \WTTXN.\; \\
+    	  &\quad \txnvar \conflict \txnvar' \implies (\txnvar \rel{\arwt} \txnvar'
+    	  \iff \txnvar.\tid < \txnvar'.\tid).
+    \end{align*}
+  \end{lemma}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \input{tables/table-deployment}
+  \begin{center}
+	MongoDB 部署配置
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \input{tables/table-generator}
+  \begin{center}
+	事务生成器相关参数 (Jepsen 支持)
+  \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \fig{width = 1.00\textwidth}{figs/check-mongo-perf}
+
+  \begin{itemize}
+	\setlength{\itemsep}{10pt}
+	\item 13ms 的时钟误差内, 可认为 $\wtalg \models \strongsi$
+	\item 10s 检测包含 30, 000 个事务的历史执行 \\[5pt]
+	  \begin{itemize}
+		\item Intel Core i5-9500 CPU @ 3.00GHZ and 16GB RAM
+	  \end{itemize}
+  \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
