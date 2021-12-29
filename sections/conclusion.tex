@@ -1,8 +1,35 @@
 % conclusion.tex
 
 %%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Conclusion}
+\begin{frame}{}
+  \fig{width = 0.80\textwidth}{figs/mongo-txn-si}
+
   \begin{center}
+    规约、协议、证明、检测算法
   \end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \begin{center}
+    本工作是迈向 MongoDB 形式化验证的一小步
+  \end{center}
+
+  \fig{width = 0.60\textwidth}{figs/future-work}
+
+  \vspace{0.20cm}
+  \begin{columns}
+    \column{0.10\textwidth}
+    \column{0.80\textwidth}
+      \begin{enumerate}[(1)]
+        \setlength{\itemsep}{10pt}
+        \item 建模事务协议中的并发机制
+        \item MongoDB 支持事务操作与非事务操作混合执行
+        \item MongoDB Raft 等相关容错与恢复机制
+        \item 利用 SMT 求解器设计高效的事务一致性检测算法
+      \end{enumerate}
+    \column{0.10\textwidth}
+  \end{columns}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
