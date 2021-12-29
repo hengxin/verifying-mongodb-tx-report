@@ -124,12 +124,12 @@
 	\setlength{\itemsep}{10pt}
 	\item $\tidvar = -1:$ 该事务已回滚
 	\item $\tidvar \in \txnvar.snapshot:$ 该事务与 $\txnvar$ 并发
-	\item $\tid \ge \txnvar.\snapshot \land \tid \neq \txnvar.\tid:$
+	\item $\tidvar \ge \txnvar.\snapmax \land \tidvar \neq \txnvar.\tid:$
 	  \vspace{0.20cm}
 	  \begin{itemize}
 		\setlength{\itemsep}{5pt}
-		\item $\tid \ge \txnvar.\snapshot:$ 该事务开始得比 $\txnvar$ 晚
-		\item $\tid \neq \txnvar.\tid:$ 允许 $\txnvar$ 观察到自身
+		\item $\tidvar \ge \txnvar.\snapmax:$ 该事务开始得比 $\txnvar$ 晚
+		\item $\tidvar \neq \txnvar.\tid:$ 允许 $\txnvar$ 观察到自身
 	  \end{itemize}
   \end{itemize}
 \end{frame}
