@@ -138,12 +138,36 @@
 
 %%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
-  \fig{width = 0.50\textwidth}{figs/nmsi-paper}
+  \fig{width = 0.65\textwidth}{figs/nmsi-paper}
 
-  \vspace{0.30cm}
   \begin{center}
-	\nmsi{}
+    SI/PSI 扩展性差, 作者提出四种可扩展性性质:
   \end{center}
+
+  \begin{description}
+	\setlength{\itemsep}{5pt}
+    \item[Wait-Free Queries:] 只读事务不被阻塞且总是被成功提交
+    \item[Genuine Partial Replication:] 仅被读写的节点参与分布式事务协议
+    \item[Minimal Commitment Synchronization:] 仅在发生写冲突时等待
+    \item[Forward Freshness:] 允许读在当前事务开始后提交的数据
+  \end{description}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+  \fig{width = 0.65\textwidth}{figs/nmsi-paper}
+
+  \begin{definition}[\nmsi]
+	\[
+	  \nmsi = \textsc{ACA} \land \textsc{CONS} \land \textsc{WCF}
+	\]
+	\begin{description}
+	  \item[Avoiding Cascading Aborts (\textsc{ACA}):] 避免读未提交数据
+	  \item[Consistent Snapshot (\textsc{CONS}):] 不遗漏所依赖事务的写操作
+	  \item[Write-Conflict Freedom (\textsc{WCF}):] 没有(并发)写冲突
+	\end{description}
+  \end{definition}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
 
@@ -156,9 +180,9 @@
 	\wsi{} 避免读-写冲突, 而不是写-写冲突 (\si: \textsc{Read}\si)
 
 	\[
-	  \wsi \subseteq \textsc{SER} \qquad
-	  \si \not\subset \textsc{SER}
+	  \wsi \;\red{\subseteq}\; \textsc{SER} \subset \si
 	\]
+	\textcolor{red!40}{(暂时存疑)}
   \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%
